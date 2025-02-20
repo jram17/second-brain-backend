@@ -3,7 +3,6 @@
 
 import express, { Application } from 'express';
 import { Request,Response } from 'express';
-import cors from 'cors';
 import { userMiddleware } from './middleware/auth';
 import { User } from './model/user-schema';
 import { Content } from './model/content-schema';
@@ -25,12 +24,19 @@ dotenv.config()
 const port = 3000;
 const app:Application = express();
 app.use(express.json());
-app.use(cors({
-    origin: 'http://localhost:5173',
-    credentials: true,
-    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
-    exposedHeaders: ['Authorization']
-}));
+app.use((req: Request, res: Response, next): void => {
+    res.set('Access-Control-Allow-Origin', 'https://second-brain-frontend-td4t.vercel.app');
+    res.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+    res.set('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  
+    if (req.method === 'OPTIONS') {
+      res.status(200).end(); // ✅ Ensure OPTIONS request stops here
+      return;
+    }
+  
+    next(); // ✅ Proceed to the next middleware
+  });
+  
 app.use(cookieParser());
 
 
