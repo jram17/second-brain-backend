@@ -30,7 +30,7 @@ const port = 3000;
 const app = (0, express_1.default)();
 app.use(express_1.default.json());
 app.use((req, res, next) => {
-    res.set('Access-Control-Allow-Origin', 'https://second-brain-frontend-tawny.vercel.app/');
+    res.set('Access-Control-Allow-Origin', 'https://second-brain-frontend-tawny.vercel.app');
     res.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
     res.set('Access-Control-Allow-Headers', 'Content-Type, Authorization');
     if (req.method === 'OPTIONS') {
