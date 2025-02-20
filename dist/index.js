@@ -33,6 +33,7 @@ app.use((req, res, next) => {
     res.set('Access-Control-Allow-Origin', 'https://second-brain-frontend-tawny.vercel.app');
     res.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
     res.set('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    res.set('Access-Control-Allow-Credentials', 'true');
     if (req.method === 'OPTIONS') {
         res.status(200).end(); // ✅ Ensure OPTIONS request stops here
         return;
