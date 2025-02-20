@@ -25,7 +25,7 @@ const port = 3000;
 const app:Application = express();
 app.use(express.json());
 app.use((req: Request, res: Response, next): void => {
-    res.set('Access-Control-Allow-Origin', 'https://second-brain-frontend-td4t.vercel.app');
+    res.set('Access-Control-Allow-Origin', '*');
     res.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
     res.set('Access-Control-Allow-Headers', 'Content-Type, Authorization');
   
