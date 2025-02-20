@@ -13,7 +13,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
-const cors_1 = __importDefault(require("cors"));
 const auth_1 = require("./middleware/auth");
 const user_schema_1 = require("./model/user-schema");
 const content_schema_1 = require("./model/content-schema");
@@ -30,12 +29,16 @@ dotenv_1.default.config();
 const port = 3000;
 const app = (0, express_1.default)();
 app.use(express_1.default.json());
-app.use((0, cors_1.default)({
-    origin: 'http://localhost:5173',
-    credentials: true,
-    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
-    exposedHeaders: ['Authorization']
-}));
+app.use((req, res, next) => {
+    res.set('Access-Control-Allow-Origin', '*');
+    res.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+    res.set('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    if (req.method === 'OPTIONS') {
+        res.status(200).end(); // ✅ Ensure OPTIONS request stops here
+        return;
+    }
+    next(); // ✅ Proceed to the next middleware
+});
 app.use(cookieParser());
 app.post('/api/v1/signup', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const username = req.body.username;
@@ -326,8 +329,8 @@ app.post('/api/v1/forgot-password', (req, res) => __awaiter(void 0, void 0, void
         return;
     }
 }));
-(0, configDB_1.connectDB)();
-app.listen(3000, () => {
-    console.log(`Server is running on port http://localhost:${port}`);
+app.get('/', (req, res) => {
+    res.send('Hello World!');
 });
+(0, configDB_1.connectDB)();
 //# sourceMappingURL=index.js.map
