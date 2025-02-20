@@ -333,4 +333,8 @@ app.get('/', (req, res) => {
     res.send('Hello World!');
 });
 (0, configDB_1.connectDB)();
+app.listen(port, () => {
+    console.log(`server is running on http://localhost:${port}`);
+});
+module.exports = app;
 //# sourceMappingURL=index.js.map
